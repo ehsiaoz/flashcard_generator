@@ -5,9 +5,9 @@ var fs = require('fs');
 
 var flashcard = function(){
 
-	this.basicFlashCard = function(answer, question) {
+	this.basicFlashCard = function(question, answer) {
 
-		var newBasicFlashCard = new basicFC(answer, question);
+		var newBasicFlashCard = new basicFC(question, answer);
 
 		
 		return newBasicFlashCard;

@@ -1,7 +1,7 @@
 
 
 //create basic flashcard constructor
-var basicFC = function (answer, question) {
+var basicFC = function (question, answer) {
 	this.front = question,
 	this.back = answer
 	

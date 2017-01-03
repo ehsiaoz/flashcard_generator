@@ -1,16 +1,24 @@
-var basic = require('./basicF.js');
-var cloze = require('./clozeF.js');
+var basicFC = require('./basicF.js');
+var clozeFC = require('./clozeF.js');
 var fs = require('fs');
 
 
 var flashcard = function(){
 
-	this.clozeFlashCard = function(answer) {
+	this.basicFlashCard = function(answer, question) {
 
-		var newClozeFlashCard = new cloze(answer);
+		var newBasicFlashCard = new basicFC(answer, question);
 
-		// return newClozeFlashCard.cloze();
-		return newClozeFlashCard.text();
+		
+		return newBasicFlashCard;
+		
+	}
+
+	this.clozeFlashCard = function(text, cloze) {
+
+		var newClozeFlashCard = new clozeFC(text, cloze);
+
+		return newClozeFlashCard;
 			// var Txt = "\nFlashCards: " + newUserSearch.name + " Location: " + newUserSearch.location + 
 	  //                 " Date: " + newUserSearch.date;
 

@@ -16,11 +16,11 @@ var flashcard = {
 		// logic to determine whether basic or cloze
 		if(arg1.indexOf('[]') > -1){
 			newFlashCard = clozeFC(arg1, arg2);
-			console.log("This is the cloze newFlashCard" + newFlashCard);
+			console.log("This is cloze newFlashCard: ", newFlashCard);
 		}
 		else{
 			newFlashCard = basicFC(arg1, arg2);
-			console.log("This is the basic newFlashCard" + newFlashCard);
+			console.log("This is basic newFlashCard: ", newFlashCard);
 		}
 
 		
@@ -31,23 +31,23 @@ var flashcard = {
 		fs.readFile(FILE_PATH, 'utf8', function (err, data) {
 			//if file does not exist (i.e. error)
 			if (err) {
-				console.log("This is the readFile error: " + err);
+				console.log("This is the readFile error: ", err);
 				newFile = true;	
-				console.log("This is the value of newFile: " + newFile);
+				console.log("This is the value of newFile: ", newFile);
 			}
 			console.log("This is data result: " + data);
 			//if the file exists
 			if(!newFile){
 				//parse the data (previous flashcards) in the json file
 				flashcardArray = JSON.parse(data);
-				console.log("typeof flashcardArray: "+typeof(flashcardArray));
+				console.log("typeof flashcardArray: ", typeof(flashcardArray));
 			}
-			console.log("This is flashcardArray before push: " + flashcardArray);
+			console.log("This is flashcardArray before push: ", flashcardArray);
 			flashcardArray.push(newFlashCard);
-			console.log("This is flashcardArray after push: " + flashcardArray);
+			console.log("This is flashcardArray after push: ", flashcardArray);
 			writeOut = JSON.stringify(flashcardArray);
-			console.log("This is writeOut: " + writeOut);
-			fs.appendFile(FILE_PATH, writeOut, function(err){
+			console.log("This is writeOut: ", writeOut);
+			fs.writeFile(FILE_PATH, writeOut, function(err){
 				if(err) {
 				    return console.log(err);
 				}

@@ -28,25 +28,24 @@ var flashcard = {
 		var flashcardArray = [];
 		var writeOut = null;
 
+		//read .json file in current directory
 		fs.readFile(FILE_PATH, 'utf8', function (err, data) {
 			//if file does not exist (i.e. error)
 			if (err) {
 				console.log("This is the readFile error: ", err);
 				newFile = true;	
-				console.log("This is the value of newFile: ", newFile);
 			}
-			console.log("This is data result: " + data);
-			//if the file exists
+			console.log("This is content of the file: " + data);
+			//if the .json file exists
 			if(!newFile){
-				//parse the data (previous flashcards) in the json file
+				//flashcardArray is equal to the parsed result of .json file (array of previously created flashcards)
 				flashcardArray = JSON.parse(data);
-				console.log("typeof flashcardArray: ", typeof(flashcardArray));
 			}
-			console.log("This is flashcardArray before push: ", flashcardArray);
+			//add the newly created flashcard to the existing array
 			flashcardArray.push(newFlashCard);
-			console.log("This is flashcardArray after push: ", flashcardArray);
+			//convert the flashcardarray to string
 			writeOut = JSON.stringify(flashcardArray);
-			console.log("This is writeOut: ", writeOut);
+			//overwrite the contents of the .json file with updated list of flashcards
 			fs.writeFile(FILE_PATH, writeOut, function(err){
 				if(err) {
 				    return console.log(err);
@@ -64,8 +63,24 @@ var flashcard = {
 		return newFlashCard;
 	},
 	//method to return front of flashcard
-	getFrontText: function(fc){
-		return fc.data.front;
+	getFrontText: function(){
+		var flashcardArray = [];
+		fs.readFile(FILE_PATH, 'utf8', function (err, data) {
+			//if file does not exist (i.e. error)
+			if (err) {
+				console.log("This is the readFile error: ", err);
+			}
+			console.log("This is content of the file: " + data);
+			//flashcardArray is equal to the parsed result of .json file (array of previously created flashcards)
+			flashcardArray = JSON.parse(data);
+			console.log("This is the flashcardArray: ", flashcardArray);
+			}
+		});
+
+
+
+		return flashcardArray
+		// return fc.data.front;
 	},
 	//method to return back of flashcard
 	getBackText: function(fc){

@@ -17,6 +17,7 @@ var basicFC = function (question, answer) {
 	}
 
 	// else if valid, return a basic Flashcard object
+	console.log(fcObject);
 	return fcObject;
 }
 

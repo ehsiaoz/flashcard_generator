@@ -1,5 +1,5 @@
-var basicFC = require('./basicFC.js');
-var clozeFC = require('./clozeFC.js');
+var basicFC = require('./basicF.js');
+var clozeFC = require('./clozeF.js');
 var fs = require('fs');
 
 var flashcard = {
@@ -16,20 +16,44 @@ var flashcard = {
 		// logic to determine whether basic or cloze
 		if(arg1.indexOf('[]') > -1){
 			newFlashCard = clozeFC(arg1, arg2);
+			console.log("This is the cloze newFlashCard" + newFlashCard);
 		}
 		else{
 			newFlashCard = basicFC(arg1, arg2);
+			console.log("This is the basic newFlashCard" + newFlashCard);
 		}
 
-		var log = JSON.stringify(newFlashCard) + ", "
+		
+		var newFile = false;
+		var flashcardArray = [];
+		var writeOut = null;
 
-		fs.appendFile(FILE_PATH, log, function(err){
-			  if(err) {
-			        return console.log(err);
-			    }
-
-			    console.log("The file was saved!");
-			})
+		fs.readFile(FILE_PATH, 'utf8', function (err, data) {
+			//if file does not exist (i.e. error)
+			if (err) {
+				console.log("This is the readFile error: " + err);
+				newFile = true;	
+				console.log("This is the value of newFile: " + newFile);
+			}
+			console.log("This is data result: " + data);
+			//if the file exists
+			if(!newFile){
+				//parse the data (previous flashcards) in the json file
+				flashcardArray = JSON.parse(data);
+				console.log("typeof flashcardArray: "+typeof(flashcardArray));
+			}
+			console.log("This is flashcardArray before push: " + flashcardArray);
+			flashcardArray.push(newFlashCard);
+			console.log("This is flashcardArray after push: " + flashcardArray);
+			writeOut = JSON.stringify(flashcardArray);
+			console.log("This is writeOut: " + writeOut);
+			fs.appendFile(FILE_PATH, writeOut, function(err){
+				if(err) {
+				    return console.log(err);
+				}
+				console.log("The file was saved!");
+			});  
+		});
 
 		// check for errors
 		if(newFlashCard.error){
@@ -50,13 +74,7 @@ var flashcard = {
 	//method to return the full answer
 	getFullText: function(fc){
 		return fc.data.ftext;
-	},
-	getFCList: function(){
-		fs.readFile(FILE_PATH, 'utf8', function (err, data) {
-		  if (err) throw err;
-		  console.log(JSON.parse(data));
-		});
-	} 
+	}, 
 };
 
 module.exports = flashcard;

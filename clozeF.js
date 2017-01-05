@@ -17,6 +17,7 @@ var clozeFC = function (text, cloze){
 		};
 	}
 
+	console.log(fcObject);
 	return fcObject;
 }
 
